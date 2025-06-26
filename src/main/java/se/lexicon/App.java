@@ -6,6 +6,7 @@ public class App {
 
         NameRepository.setNames(new String[]{"Erik Svensson", "Mehrdad Javan"});
         System.out.println(NameRepository.getSize());
-        // call more methods as needed
+        NameRepository.clear();
+        System.out.println(NameRepository.getSize());
     }
 }

@@ -24,7 +24,7 @@ public class NameRepository {
      *
      * @param setNames The array of names to set.
      *
-     * This method now takes the string[] with set names, and assigns them to the class string[].
+     * This method now takes the method string[] with setNames, and assigns them to the class string[] names.
      */
     public static void setNames(String[] setNames) {
         NameRepository.names = setNames;
@@ -35,7 +35,7 @@ public class NameRepository {
      * Clears the names array by creating a new empty array.
      */
     public static void clear() {
-        //todo: implement clear method
+        names = new String[0];
     }
 
 
