@@ -10,6 +10,11 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class NameRepositoryTest {
 
+    @BeforeEach
+    void setUp() {
+        NameRepository.setNames(new String[]{"Erik Svensson", "Mehrdad Javan"});
+    }
+
     @Test
     void testsGetSizeWithTwoNames() {
 
@@ -21,7 +26,18 @@ public class NameRepositoryTest {
 
         // Assert: We expect the value 2.
         assertEquals(2, actual, "getSize() should return 2 when two names is added.");
+    }
 
+    @Test
+    void testGetSizeWhenEmpty() {
+        // Arrange: We clear the string[].
+        NameRepository.clear();
+
+        // Act: We get the length.
+        int actual = NameRepository.getSize();
+
+        // Assert: We expect the value 0.
+        assertEquals(0, actual, "getSize() should return 0 after clear.");
     }
 
 
