@@ -17,6 +17,7 @@ public class NameRepository {
      * @return The number of elements in the names array.
      */
     public static int getSize() {
+        // Finds the length of names.
         return names.length;
     }
 
@@ -29,6 +30,7 @@ public class NameRepository {
      * This method now takes the method string[] with setNames, and assigns them to the class string[] names.
      */
     public static void setNames(String[] setNames) {
+        // Assign values to the class String[] names.
         NameRepository.names = setNames;
     }
 
@@ -37,6 +39,7 @@ public class NameRepository {
      * Clears the names array by creating a new empty array.
      */
     public static void clear() {
+        // Sets names to a new, empty String[].
         names = new String[0];
     }
 
@@ -49,10 +52,11 @@ public class NameRepository {
     public static String[] findAll() {
         String[] allNames = new String[names.length];
 
+        // Loops through String[] names, and copy the value to String[] allNames.
         for (int i = 0; i < names.length; i++) {
             allNames[i] = names[i];
         }
-
+        // Return the copied String[].
         return allNames;
     }
 
@@ -68,9 +72,11 @@ public class NameRepository {
         for (int i = 0; i < names.length; i++) {
 
             if (names[i].equalsIgnoreCase(fullName)) {
+                // The name was found.
                 return names[i];
             }
         }
+        // The name was not found.
         return null;
     }
 
@@ -85,14 +91,17 @@ public class NameRepository {
 
         for (int i = 0; i < names.length; i++) {
 
+            // Checks if the nameToAdd is in the String[] names.
             if (names[i].equalsIgnoreCase(nameToAdd)){
+                // The name was found, and will not be added.
                 return false;
             }
         }
-
+        // Copy the String[] names, expand the index by +1, and add the name at last index, then update.
         String[] addedName = Arrays.copyOf(names, names.length + 1);
         addedName[addedName.length - 1] = nameToAdd;
         names = addedName;
+        // The name was added.
         return true;
     }
 
