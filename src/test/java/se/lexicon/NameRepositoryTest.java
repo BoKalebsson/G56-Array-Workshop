@@ -58,7 +58,19 @@ public class NameRepositoryTest {
         NameRepository.setNames(new String[0]);
 
         // Assert: Check if the size is 0.
-        assertEquals(0, NameRepository.getSize(), "setNames() with an empty String[] should have the length of 0.");
+        assertEquals(0, NameRepository.getSize(), "setNames() with an empty String[] should return 0.");
+    }
+
+    @Test
+    void testClear_ShouldEmptyTheList() {
+        // Arrange: We start with our @BeforeEach that enters two names.
+
+        // Act: We clear the String[].
+        NameRepository.clear();
+
+        // Assert: Size should be 0, and findAll() should return an empty String[].
+        assertEquals(0, NameRepository.getSize(), "clear() should clear the String[] and the size should be 0.");
+        assertArrayEquals(new String[0], NameRepository.findAll(), "findAll() shall return an empty String[] after clear().");
     }
 
 
