@@ -45,8 +45,13 @@ public class NameRepository {
      * @return A new array containing all elements from the names array.
      */
     public static String[] findAll() {
-        //todo: implement findAll method
-        return null;
+        String[] allNames = new String[names.length];
+
+        for (int i = 0; i < names.length; i++) {
+            allNames[i] = names[i];
+        }
+
+        return allNames;
     }
 
 
