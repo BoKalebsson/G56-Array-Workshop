@@ -15,8 +15,7 @@ public class NameRepository {
      * @return The number of elements in the names array.
      */
     public static int getSize() {
-        //todo: implement getSize method
-        return 0;
+        return names.length;
     }
 
 
