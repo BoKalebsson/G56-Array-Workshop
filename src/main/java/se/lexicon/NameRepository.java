@@ -100,12 +100,26 @@ public class NameRepository {
     /**
      * Find all names that match the given firstName.
      *
-     * @param firstName The first name to search for.
+     * @param searchedFirstName The first name to search for.
      * @return An array containing all matching names.
      */
-    public static String[] findByFirstName(String firstName) {
-        //todo: findByFirstName method
-        return null;
+    public static String[] findByFirstName(String searchedFirstName) {
+
+        String[] matchingNames = new String[0];
+
+        for (int i = 0; i < names.length; i++) {
+            String[] splitName = names[i].split(" ");
+            String currentFirstName = splitName[0];
+
+            if (currentFirstName.equalsIgnoreCase(searchedFirstName)){
+
+                String[] temp = Arrays.copyOf(matchingNames, matchingNames.length + 1);
+                temp[temp.length - 1] = names[i];
+                matchingNames = temp;
+            }
+
+        }
+        return matchingNames;
     }
 
 

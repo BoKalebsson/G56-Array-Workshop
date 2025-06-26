@@ -43,6 +43,15 @@ public class App {
 
         System.out.println("----------------------------------");
 
+        String[] firstNameMatches = NameRepository.findByFirstName("Erik");
+
+        System.out.println("Matching names with firstname of 'Erik':");
+        for (String name : firstNameMatches) {
+            System.out.println(name);
+        }
+
+        System.out.println("----------------------------------");
+
 
 
     }
