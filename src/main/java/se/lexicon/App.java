@@ -61,6 +61,39 @@ public class App {
 
         System.out.println("----------------------------------");
 
+        String originalName = "Mehrdad Javan";
+        String newName = "Erik Svensson";
+
+        boolean wasUpdated = NameRepository.update(originalName, newName);
+
+        System.out.println("Tried to update: " + originalName + " → " + newName);
+        System.out.println(wasUpdated ? "Update successful." : "Update failed.");
+
+
+        System.out.println("The names in the list now:");
+        for (String name : NameRepository.findAll()) {
+            System.out.println(name);
+        }
+
+        System.out.println("----------------------------------");
+
+        NameRepository.setNames(new String[]{"Erik Svensson", "Mehrdad Javan", "Fredrik Andersson"});
+
+        System.out.println("Before removal:");
+        for (String name : NameRepository.findAll()) {
+            System.out.println(name);
+        }
+
+        boolean removed = NameRepository.remove("Mehrdad Javan");
+        System.out.println("Trying to remove 'Mehrdad Javan': " + (removed ? "Successful." : "Failed."));
+
+        System.out.println("After removal:");
+        for (String name : NameRepository.findAll()) {
+            System.out.println(name);
+        }
+
+        System.out.println("----------------------------------");
+
 
     }
 }

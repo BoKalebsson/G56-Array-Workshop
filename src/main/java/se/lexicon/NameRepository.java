@@ -211,9 +211,47 @@ public class NameRepository {
      * @return True if the name is removed successfully; false if the name is not found in the array.
      */
     public static boolean remove(String fullName) {
-        //todo: implement remove method
-        return false;
-    }
 
+        int indexToRemove = -1;
+
+        // Find the index we want to remove.
+        for (int i = 0; i < names.length; i++) {
+
+            if (names[i].equalsIgnoreCase(fullName)) {
+                indexToRemove = i;
+                // We found it, stop looking.
+                break;
+            }
+        }
+        // The name was not in the list.
+        if (indexToRemove == -1) {
+            return false;
+        }
+
+        // Create a String[] that is -1 index.
+        String[] nameRemoved = new String[names.length -1];
+        // Used for keeping track of the position in the new String[].
+        int newIndex = 0;
+
+        // Copy all the names, except the one we want to remove.
+        for (int i = 0; i < names.length; i++) {
+
+            if (i == indexToRemove) {
+                // This is the index we want to remove, skip it.
+                continue;
+            }
+
+            // Copy the name to the new String[].
+            nameRemoved[newIndex] = names[i];
+            // Update the index by 1 in the new String[].
+            newIndex++;
+        }
+
+        // Update the String[] names with the updates from String[] nameRemoved.
+        names = nameRemoved;
+
+        // Removal of the name was successful.
+        return true;
+    }
 
 }
