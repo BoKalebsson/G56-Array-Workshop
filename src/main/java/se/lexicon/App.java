@@ -15,7 +15,16 @@ public class App {
             System.out.println(name);
         }
 
+        String searchedName = "Erik Svenson";
+        String result = NameRepository.find(searchedName);
 
+        System.out.println("Name you searched for: " + searchedName);
+
+        if (result != null) {
+            System.out.println("Result: " + result);
+        } else {
+            System.out.println("Result: Was not found");
+        }
 
     }
 }

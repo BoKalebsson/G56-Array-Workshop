@@ -62,7 +62,13 @@ public class NameRepository {
      * @return The matching name if found; otherwise, null.
      */
     public static String find(String fullName) {
-        //todo: implement find method
+
+        for (int i = 0; i < names.length; i++) {
+
+            if (names[i].equalsIgnoreCase(fullName)) {
+                return names[i];
+            }
+        }
         return null;
     }
 
