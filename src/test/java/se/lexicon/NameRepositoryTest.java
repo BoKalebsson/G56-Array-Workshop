@@ -16,7 +16,7 @@ public class NameRepositoryTest {
     }
 
     @Test
-    void testsGetSizeWithTwoNames() {
+    void testsGetSize_WithTwoNames() {
 
         // Arrange: We add two names.
         NameRepository.setNames(new String[]{"Erik Svensson", "Merdad Javan"});
@@ -29,7 +29,7 @@ public class NameRepositoryTest {
     }
 
     @Test
-    void testGetSizeWhenEmpty() {
+    void testGetSize_WhenEmpty() {
         // Arrange: We clear the string[].
         NameRepository.clear();
 
@@ -40,11 +40,26 @@ public class NameRepositoryTest {
         assertEquals(0, actual, "getSize() should return 0 after clear.");
     }
 
+    @Test
+    void testSetNames_ReplacesNamesCorrectly() {
+        // Arrange: Create a new String[] with new names.
+        String[] newNames = {"Greger Ottosson", "Allan Svensson"};
 
+        // Act: Set the String[].
+        NameRepository.setNames(newNames);
 
+        // Assert: Get the String[] and
+        assertArrayEquals(newNames, NameRepository.findAll(), "setNames() should replace all the old names with the new ones.");
+    }
 
+    @Test
+    void testSetNames_WithEmptyArray_ShouldClearList() {
+        // Arrange & Act: Create an empty String[].
+        NameRepository.setNames(new String[0]);
 
-
+        // Assert: Check if the size is 0.
+        assertEquals(0, NameRepository.getSize(), "setNames() with an empty String[] should have the length of 0.");
+    }
 
 
 }
