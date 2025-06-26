@@ -23,9 +23,11 @@ public class NameRepository {
      * Sets the names array to the provided array of names & it should replace all existing names.
      *
      * @param names The array of names to set.
+     *
+     * This method now takes the string[] with set names, and assigns them to the class string[].
      */
     public static void setNames(String[] names) {
-        //todo: implement setNames method
+        NameRepository.names = names;
     }
 
 
