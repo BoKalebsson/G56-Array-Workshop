@@ -1,99 +1,108 @@
 package se.lexicon;
 
+import java.util.Scanner;
 
 public class App {
+
+    private static final Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
 
-        System.out.println("----------------------------------");
-
         NameRepository.setNames(new String[]{"Erik Svensson", "Mehrdad Javan"});
-        System.out.println("Number of names in the array: " + NameRepository.getSize());
+        boolean running = true;
 
-        System.out.println("----------------------------------");
+        while (running) {
+            printMenu();
+            String choice = scanner.nextLine();
 
-        String[] names = NameRepository.findAll();
-        System.out.println("Names in the array: ");
-        for (String name : names) {
-            System.out.println(name);
+            switch (choice) {
+                case "1":
+                    System.out.println("All names:");
+                    printNames(NameRepository.findAll());
+                    break;
+
+                case "2":
+                    System.out.print("Enter a name to search for (exact full name): ");
+                    String searchName = scanner.nextLine();
+                    String found = NameRepository.find(searchName);
+                    System.out.println(found != null ? "Found: " + found : "Not found.");
+                    break;
+
+                case "3":
+                    System.out.print("Enter a full name to add: ");
+                    String nameToAdd = scanner.nextLine();
+                    boolean added = NameRepository.add(nameToAdd);
+                    System.out.println(added ? "Name added." : "Name already exists.");
+                    break;
+
+                case "4":
+                    System.out.print("Enter a firstname to search for it: ");
+                    String firstName = scanner.nextLine();
+                    printNames(NameRepository.findByFirstName(firstName));
+                    break;
+
+                case "5":
+                    System.out.print("Enter a lastname to search for it: ");
+                    String lastName = scanner.nextLine();
+                    printNames(NameRepository.findByLastName(lastName));
+                    break;
+
+                case "6":
+                    System.out.print("Enter an original name to update: ");
+                    String original = scanner.nextLine();
+                    System.out.print("Enter a new name: ");
+                    String updated = scanner.nextLine();
+                    boolean updatedResult = NameRepository.update(original, updated);
+                    System.out.println(updatedResult ? "Update successful." : "Update failed.");
+                    break;
+
+                case "7":
+                    System.out.print("Enter a name to remove: ");
+                    String nameToRemove = scanner.nextLine();
+                    boolean removed = NameRepository.remove(nameToRemove);
+                    System.out.println(removed ? "Name removed." : "Name not found.");
+                    break;
+
+                case "8":
+                    System.out.println("Clears all names...");
+                    NameRepository.clear();
+                    break;
+
+                case "9":
+                    System.out.println("Exiting the program...");
+                    running = false;
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+
+            System.out.println();
         }
+        scanner.close();
+    }
 
-        System.out.println("----------------------------------");
+    private static void printMenu() {
+        System.out.println("===== Menu =====");
+        System.out.println("1. Show all names");
+        System.out.println("2. Search for a name (exact)");
+        System.out.println("3. Add a new name");
+        System.out.println("4. Search for firstname");
+        System.out.println("5. Search for lastname");
+        System.out.println("6. Update name");
+        System.out.println("7. Remove name");
+        System.out.println("8. Clear all names");
+        System.out.println("9. Exit");
+        System.out.print("Choose an alternative: ");
+    }
 
-        String searchedName = "Erik Svenson";
-        String result = NameRepository.find(searchedName);
-
-        System.out.println("Name you searched for: " + searchedName);
-
-        if (result != null) {
-            System.out.println("Result: " + result);
+    private static void printNames(String[] names) {
+        if (names.length == 0) {
+            System.out.println("(No names found.)");
         } else {
-            System.out.println("Result: Was not found");
+            for (String name : names) {
+                System.out.println("- " + name);
+            }
         }
-
-        System.out.println("----------------------------------");
-
-        System.out.println(NameRepository.add("Fredrik Andersson") ? "Name was added." : "Name already exist.");
-
-        String[] updatedNames = NameRepository.findAll();
-
-        System.out.println("Names in the array now: ");
-        for (String name : updatedNames) {
-            System.out.println(name);
-        }
-
-        System.out.println("----------------------------------");
-
-        String[] firstNameMatches = NameRepository.findByFirstName("Erik");
-
-        System.out.println("Matching names with firstname of 'Erik':");
-        for (String name : firstNameMatches) {
-            System.out.println(name);
-        }
-
-        System.out.println("----------------------------------");
-
-        String[] lastNameMatches = NameRepository.findByLastName("Javan");
-
-        System.out.println("Matching names with lastname of 'Javan':");
-        for (String name : lastNameMatches) {
-            System.out.println(name);
-        }
-
-        System.out.println("----------------------------------");
-
-        String originalName = "Mehrdad Javan";
-        String newName = "Erik Svensson";
-
-        boolean wasUpdated = NameRepository.update(originalName, newName);
-
-        System.out.println("Tried to update: " + originalName + " → " + newName);
-        System.out.println(wasUpdated ? "Update successful." : "Update failed.");
-
-
-        System.out.println("The names in the list now:");
-        for (String name : NameRepository.findAll()) {
-            System.out.println(name);
-        }
-
-        System.out.println("----------------------------------");
-
-        NameRepository.setNames(new String[]{"Erik Svensson", "Mehrdad Javan", "Fredrik Andersson"});
-
-        System.out.println("Before removal:");
-        for (String name : NameRepository.findAll()) {
-            System.out.println(name);
-        }
-
-        boolean removed = NameRepository.remove("Mehrdad Javan");
-        System.out.println("Trying to remove 'Mehrdad Javan': " + (removed ? "Successful." : "Failed."));
-
-        System.out.println("After removal:");
-        for (String name : NameRepository.findAll()) {
-            System.out.println(name);
-        }
-
-        System.out.println("----------------------------------");
-
-
     }
 }
