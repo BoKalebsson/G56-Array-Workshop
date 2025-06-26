@@ -107,14 +107,20 @@ public class NameRepository {
 
         String[] matchingNames = new String[0];
 
+
         for (int i = 0; i < names.length; i++) {
+            // Split the string[] at " " and store the two names in a new String[].
             String[] splitName = names[i].split(" ");
+            // Assign splitName[0] containing the first name, to the string currentFirstName.
             String currentFirstName = splitName[0];
 
             if (currentFirstName.equalsIgnoreCase(searchedFirstName)){
 
+                // Copy the matchingNames, into the String[] temp expanded with +1 index.
                 String[] temp = Arrays.copyOf(matchingNames, matchingNames.length + 1);
+                // Add names[i] to the last index in the String[] temp.
                 temp[temp.length - 1] = names[i];
+                // Updates the String[] matchingNames.
                 matchingNames = temp;
             }
 
@@ -130,16 +136,24 @@ public class NameRepository {
      * @return An array containing all matching names.
      */
     public static String[] findByLastName(String searchedLastName) {
+
         String[] matchingNames = new String[0];
 
+
         for (int i = 0; i < names.length; i++) {
+            // Split the string[] at " " and store the two names in a new String[].
             String[] splitName = names[i].split(" ");
+            // Assign splitName[1] containing the last name, to the string currentLastName.
             String currentLastName = splitName[1];
+
 
             if (currentLastName.equalsIgnoreCase(searchedLastName)){
 
+                // Copy the matchingNames, into the String[] temp expanded with +1 index.
                 String[] temp = Arrays.copyOf(matchingNames, matchingNames.length + 1);
+                // Add names[i] to the last index in the String[] temp.
                 temp[temp.length - 1] = names[i];
+                // Updates the String[] matchingNames.
                 matchingNames = temp;
             }
 
@@ -150,12 +164,33 @@ public class NameRepository {
     /**
      * Updates a name in the names array from the original name to the updated name.
      *
-     * @param original    The original name to update.
+     * @param originalName    The original name to update.
      * @param updatedName The updated name to set.
      * @return True if the name is updated successfully; false if the updated name already exists or the original name is not found.
      */
-    public static boolean update(String original, String updatedName) {
-        //todo: implement update method
+    public static boolean update(String originalName, String updatedName) {
+
+
+        for (int i = 0; i < names.length; i++) {
+
+            // Checks if names[i] is equal to the originalName.
+            if (names[i].equalsIgnoreCase(originalName)){
+
+                for (int j = 0; j < names.length; j++) {
+
+                    // Checks if names[j] is equal to the updatedName.
+                    if (names[j].equalsIgnoreCase(updatedName)) {
+                        // We found a duplicate and will not update the list with it.
+                        return false;
+                    }
+                }
+                // We have found the original name, and updates it to the updatedName.
+                names[i] = updatedName;
+                // The update succeeded.
+                return true;
+            }
+        }
+        // We never found the originalName in the String[] names.
         return false;
     }
 
