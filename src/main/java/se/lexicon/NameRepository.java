@@ -126,14 +126,26 @@ public class NameRepository {
     /**
      * Find all names that match the given lastName.
      *
-     * @param lastName The last name to search for.
+     * @param searchedLastName The last name to search for.
      * @return An array containing all matching names.
      */
-    public static String[] findByLastName(String lastName) {
-        //todo: implement findByLastName method
-        return null;
-    }
+    public static String[] findByLastName(String searchedLastName) {
+        String[] matchingNames = new String[0];
 
+        for (int i = 0; i < names.length; i++) {
+            String[] splitName = names[i].split(" ");
+            String currentLastName = splitName[1];
+
+            if (currentLastName.equalsIgnoreCase(searchedLastName)){
+
+                String[] temp = Arrays.copyOf(matchingNames, matchingNames.length + 1);
+                temp[temp.length - 1] = names[i];
+                matchingNames = temp;
+            }
+
+        }
+        return matchingNames;
+    }
 
     /**
      * Updates a name in the names array from the original name to the updated name.

@@ -52,6 +52,14 @@ public class App {
 
         System.out.println("----------------------------------");
 
+        String[] lastNameMatches = NameRepository.findByLastName("Javan");
+
+        System.out.println("Matching names with lastname of 'Javan':");
+        for (String name : lastNameMatches) {
+            System.out.println(name);
+        }
+
+        System.out.println("----------------------------------");
 
 
     }
