@@ -171,6 +171,58 @@ public class NameRepositoryTest {
         assertEquals(2, NameRepository.getSize(), "Size should not change when adding blank string");
     }*/
 
+    // Group: findByFirstName
+    @Test
+    void testFindByFirstName_ShouldReturnMatchingName() {
+        // Arrange: We start from @BeforeEach with "Erik Svensson" and "Mehrdad Javan"
+
+        // Act: Search for the firstname "Erik"
+        String[] result = NameRepository.findByFirstName("Erik");
+
+        // Assert:
+        assertArrayEquals(
+                new String[]{"Erik Svensson"},
+                result,
+                "Should return names with the first name 'Erik'"
+        );
+    }
+
+    @Test
+    void testFindByFirstName_ShouldReturnEmptyArray_WhenNoMatch() {
+        // Arrange: We start from @BeforeEach with "Erik Svensson" and "Mehrdad Javan"
+
+        // Act: Search for a first name that doesn't exist.
+        String[] result = NameRepository.findByFirstName("Anna");
+
+        // Assert:
+        assertArrayEquals(
+                new String[0],
+                result,
+                "Should return empty array when no first name matches"
+        );
+    }
+
+    @Test
+    void testFindByFirstName_ShouldReturnMultipleMatches() {
+        // Arrange: Adding more names with the same firstname.
+        NameRepository.setNames(new String[]{
+                "Erik Svensson",
+                "Mehrdad Javan",
+                "Erik Larsson",
+                "Erik Karlsson"
+        });
+
+        // Act: Search for "Erik"
+        String[] result = NameRepository.findByFirstName("Erik");
+
+        // Assert: We expect 3 matches.
+        assertArrayEquals(
+                new String[]{"Erik Svensson", "Erik Larsson", "Erik Karlsson"},
+                result,
+                "Should return all names with the first name 'Erik'"
+        );
+    }
+
 
 }
 
