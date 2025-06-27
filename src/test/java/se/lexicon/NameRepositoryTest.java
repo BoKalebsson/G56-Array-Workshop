@@ -275,6 +275,62 @@ public class NameRepositoryTest {
         );
     }
 
+    // Group: update()
+    @Test
+    void testUpdate_ShouldReturnTrue_WhenOriginalExistsAndUpdatedNameNotExists() {
+        // Arrange: We start from @BeforeEach with "Erik Svensson" and "Mehrdad Javan"
+
+        String original = "Erik Svensson";
+        String updatedName = "Erik Andersson";
+
+        // Act: Trying to update "Erik Svensson" to "Erik Andersson"
+        boolean result = NameRepository.update(original, updatedName);
+
+        // Assert:
+        assertTrue(result, "update() should return true when update is successful");
+        assertArrayEquals(
+                new String[]{"Erik Andersson", "Mehrdad Javan"},
+                NameRepository.findAll(),
+                "Name list should reflect the updated name"
+        );
+    }
+
+    @Test
+    void testUpdate_ShouldReturnFalse_WhenOriginalDoesNotExist() {
+        // Arrange: We start from @BeforeEach with "Erik Svensson" and "Mehrdad Javan"
+        String original = "Non Existent Name";
+        String updatedName = "New Name";
+
+        // Act: Trying to update a name that doesn't exist.
+        boolean result = NameRepository.update(original, updatedName);
+
+        // Assert:
+        assertFalse(result, "update() should return false when original name is not found");
+        assertArrayEquals(
+                new String[]{"Erik Svensson", "Mehrdad Javan"},
+                NameRepository.findAll(),
+                "Name list should remain unchanged when update fails"
+        );
+    }
+
+    @Test
+    void testUpdate_ShouldReturnFalse_WhenUpdatedNameAlreadyExists() {
+        // Arrange: We start from @BeforeEach with "Erik Svensson" and "Mehrdad Javan"
+        String original = "Mehrdad Javan";
+        String updatedName = "Erik Svensson"; // Already exists.
+
+        // Act: Trying to update "Mehrdad Javan" to a name that already exists.
+        boolean result = NameRepository.update(original, updatedName);
+
+        // Assert:
+        assertFalse(result, "update() should return false when updatedName already exists");
+        assertArrayEquals(
+                new String[]{"Erik Svensson", "Mehrdad Javan"},
+                NameRepository.findAll(),
+                "Name list should remain unchanged when update fails"
+        );
+    }
+
 
 }
 
