@@ -223,6 +223,58 @@ public class NameRepositoryTest {
         );
     }
 
+    //Group: findByLastName
+    @Test
+    void testFindByLastName_ShouldReturnMatchingName() {
+        // Arrange: We start from @BeforeEach with "Erik Svensson" and "Mehrdad Javan"
+
+        // Act: Searches for the lastname "Svensson"
+        String[] result = NameRepository.findByLastName("Svensson");
+
+        // Assert:
+        assertArrayEquals(
+                new String[]{"Erik Svensson"},
+                result,
+                "Should return names with the last name 'Svensson'"
+        );
+    }
+
+    @Test
+    void testFindByLastName_ShouldReturnEmptyArray_WhenNoMatch() {
+        // Arrange: We start from @BeforeEach with "Erik Svensson" and "Mehrdad Javan"
+
+        // Act: Searches for the lastname "Andersson" which doesn't exist.
+        String[] result = NameRepository.findByLastName("Andersson");
+
+        // Assert:
+        assertArrayEquals(
+                new String[0],
+                result,
+                "Should return empty array when no last name matches"
+        );
+    }
+
+    @Test
+    void testFindByLastName_ShouldReturnMultipleMatches() {
+        // Arrange: Adding more names with the same lastname.
+        NameRepository.setNames(new String[]{
+                "Erik Svensson",
+                "Mehrdad Javan",
+                "Sara Javan",
+                "Lars Javan"
+        });
+
+        // Act: Searching for "Javan"
+        String[] result = NameRepository.findByLastName("Javan");
+
+        // Assert: We expect three matches.
+        assertArrayEquals(
+                new String[]{"Mehrdad Javan", "Sara Javan", "Lars Javan"},
+                result,
+                "Should return all names with the last name 'Javan'"
+        );
+    }
+
 
 }
 
