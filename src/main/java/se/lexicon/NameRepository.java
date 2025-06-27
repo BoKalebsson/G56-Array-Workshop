@@ -87,7 +87,7 @@ public class NameRepository {
      * @param nameToAdd The full name to add.
      * @return True if the fullName is added successfully; false if it already exists.
      *
-     * TODO: Fix some sort of input validation method. You can add anything as a name right now.
+     *
      */
     public static boolean add(String nameToAdd) {
 
