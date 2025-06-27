@@ -31,8 +31,13 @@ public class App {
                 case "3":
                     System.out.print("Enter a full name to add: ");
                     String nameToAdd = scanner.nextLine();
-                    boolean added = NameRepository.add(nameToAdd);
-                    System.out.println(added ? "Name added." : "Name already exists.");
+
+                    if (!NameValidator.isValid(nameToAdd)) {
+                        System.out.println("Invalid input. Name must consist of two words (firstname and lastname), only letters (a–z, å, ä, ö) allowed.");
+                    } else {
+                        boolean added = NameRepository.add(nameToAdd);
+                        System.out.println(added ? "Name added." : "Name already exists.");
+                    }
                     break;
 
                 case "4":
@@ -48,12 +53,24 @@ public class App {
                     break;
 
                 case "6":
-                    System.out.print("Enter an original name to update: ");
+                    System.out.print("Enter the original name to update: ");
                     String original = scanner.nextLine();
-                    System.out.print("Enter a new name: ");
+
+                    System.out.print("Enter the new name: ");
                     String updated = scanner.nextLine();
-                    boolean updatedResult = NameRepository.update(original, updated);
-                    System.out.println(updatedResult ? "Update successful." : "Update failed.");
+
+                    if (!NameValidator.isValid(updated)) {
+                        System.out.println("Invalid input. New name must consist of two words (firstname and lastname), only letters (a–z, å, ä, ö) allowed.");
+                    } else {
+                        boolean updatedResult = NameRepository.update(original, updated);
+                        if (updatedResult) {
+                            System.out.println("Update successful.");
+                        } else if (NameRepository.find(updated) != null) {
+                            System.out.println("Update failed. The new name already exists.");
+                        } else {
+                            System.out.println("Update failed. The original name was not found.");
+                        }
+                    }
                     break;
 
                 case "7":
