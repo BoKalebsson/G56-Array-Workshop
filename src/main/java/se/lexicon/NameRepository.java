@@ -92,7 +92,7 @@ public class NameRepository {
     public static boolean add(String nameToAdd) {
 
         // Check if the name is valid first of all. Exit if not.
-        if (!isValidName(nameToAdd)) {
+        if (!NameValidator.isValid(nameToAdd)) {
             return false;
         }
 
@@ -111,29 +111,6 @@ public class NameRepository {
         // The name was added.
         return true;
     }
-
-    private static boolean isValidName(String name) {
-        // Check if name is null.
-        if (name == null) return false;
-
-        // Check if name is empty.
-        name = name.trim();
-        if (name.isEmpty()) return false;
-
-        // Checks structure of name, and valid chars.
-        return isValidFullName(name);
-    }
-
-    private static boolean isValidFullName(String name) {
-        // Check if name follows the structure of [firstname][" "][lastname].
-        String[] parts = name.split(" ");
-        if (parts.length != 2) return false;
-
-        // Checks if the name contains valid chars.
-        String nameRegex = "^[a-zA-ZåäöÅÄÖ]+$";
-        return parts[0].matches(nameRegex) && parts[1].matches(nameRegex);
-    }
-
 
     /**
      * Find all names that match the given firstName.
@@ -208,6 +185,9 @@ public class NameRepository {
      */
     public static boolean update(String originalName, String updatedName) {
 
+        if (!NameValidator.isValid(updatedName)) {
+            return false;
+        }
 
         for (int i = 0; i < names.length; i++) {
 
