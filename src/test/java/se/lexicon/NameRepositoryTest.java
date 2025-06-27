@@ -331,6 +331,41 @@ public class NameRepositoryTest {
         );
     }
 
+    //Group: remove()
+    @Test
+    void testRemove_ShouldReturnTrue_WhenNameExists() {
+        // Arrange: We start from @BeforeEach with "Erik Svensson" and "Mehrdad Javan"
+        String nameToRemove = "Mehrdad Javan";
+
+        // Act: Trying to remove the name.
+        boolean result = NameRepository.remove(nameToRemove);
+
+        // Assert:
+        assertTrue(result, "remove() should return true when the name exists and is removed");
+        assertArrayEquals(
+                new String[]{"Erik Svensson"},
+                NameRepository.findAll(),
+                "Name list should no longer contain the removed name"
+        );
+    }
+
+    @Test
+    void testRemove_ShouldReturnFalse_WhenNameDoesNotExist() {
+        // Arrange: We start from @BeforeEach with "Erik Svensson" and "Mehrdad Javan"
+        String nameToRemove = "Non Existent Name";
+
+        // Act: Trying to remove a name that doesn't exist.
+        boolean result = NameRepository.remove(nameToRemove);
+
+        // Assert:
+        assertFalse(result, "remove() should return false when the name does not exist");
+        assertArrayEquals(
+                new String[]{"Erik Svensson", "Mehrdad Javan"},
+                NameRepository.findAll(),
+                "Name list should remain unchanged when removal fails"
+        );
+    }
+
 
 }
 
