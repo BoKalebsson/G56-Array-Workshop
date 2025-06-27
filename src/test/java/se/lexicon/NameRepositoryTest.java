@@ -116,7 +116,7 @@ public class NameRepositoryTest {
         String[] actualNames = NameRepository.findAll();
 
         // Modify something in the copy.
-        actualNames[0] = "Något annat";
+        actualNames[0] = "Something else";
 
         // Get a copy again to verify that the original has not been changed.
         String[] namesAfterChange = NameRepository.findAll();
@@ -124,6 +124,52 @@ public class NameRepositoryTest {
         // Assert: The original should contain the original value.
         assertEquals("Erik Svensson", namesAfterChange[0], "Changing the returned array should not affect the original data.");
     }
+
+    // Group: add()
+    @Test
+    void testAdd_ShouldAddNewNameSuccessfully() {
+        // Arrange: A new name that doesn't exist.
+        String newName = "Greger Karlsson";
+
+        // Act: Try to add the name.
+        boolean wasAdded = NameRepository.add(newName);
+
+        // Assert:
+        assertTrue(wasAdded, "add() should return true when adding a unique name");
+        assertEquals(3, NameRepository.getSize(), "The size should increase after adding a new name");
+
+        // Verify that the name is in the string[]
+        assertEquals(newName, NameRepository.find(newName), "The new name should be found in the list");
+    }
+
+    @Test
+    void testAdd_ShouldNotAddDuplicateName() {
+        // Arrange: Name already exists (via @BeforeEach)
+        String duplicate = "erik svensson"; // Lower case
+
+        // Act: Try to add the same name.
+        boolean wasAdded = NameRepository.add(duplicate);
+
+        // Assert:
+        assertFalse(wasAdded, "add() should return false when trying to add a duplicate name");
+        assertEquals(2, NameRepository.getSize(), "The size should remain the same when duplicate is added");
+    }
+
+/*    // This test will fail at the moment, due to lack of input validation in the add().
+    @Test
+    void testAdd_ShouldNotAddNullOrEmptyOrBlankName() {
+        // Act & Assert: null
+        assertFalse(NameRepository.add(null), "add(null) should return false");
+        assertEquals(2, NameRepository.getSize(), "Size should not change when adding null");
+
+        // Act & Assert: Empty string
+        assertFalse(NameRepository.add(""), "add(\"\") should return false");
+        assertEquals(2, NameRepository.getSize(), "Size should not change when adding empty string");
+
+        // Act & Assert: Whitespace
+        assertFalse(NameRepository.add("   "), "add(\"   \") should return false");
+        assertEquals(2, NameRepository.getSize(), "Size should not change when adding blank string");
+    }*/
 
 
 }
